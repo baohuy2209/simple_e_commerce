@@ -23,7 +23,7 @@ const signup = async (req, res) => {
     const user = new User({
       email,
       password: hashedPassword,
-      fullname,
+      name: fullname,
       lastLogin: new Date(),
     });
 
@@ -53,7 +53,7 @@ const login = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Invalid credentials" });
     }
-    const isPasswordValid = await bcryptjs.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res
         .status(400)

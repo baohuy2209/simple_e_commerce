@@ -1,7 +1,7 @@
 import React from "react";
 
 import AuthService from "../../services/authServive";
-
+import { useNavigate } from "react-router-dom";
 export default function Register() {
   const form = React.useRef();
   const [fullname, setFullname] = React.useState("");
@@ -9,6 +9,7 @@ export default function Register() {
   const [email, setEmail] = React.useState("");
   const [message, setMessage] = React.useState("");
   const [successful, setSuccessful] = React.useState(false);
+  const navigate = useNavigate();
   const onChangeFullname = (value) => {
     setFullname(value);
   };
@@ -29,6 +30,7 @@ export default function Register() {
       .then((response) => {
         setMessage(response.data.message);
         setSuccessful(true);
+        navigate("/login");
       })
       .catch((error) => {
         const resMessage =

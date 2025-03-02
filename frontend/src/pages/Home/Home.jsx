@@ -1,11 +1,27 @@
 import React from "react";
+import clothesService from "../../services/clothesService";
 import { ArrowBigRightDash, ArrowBigLeftDash } from "lucide-react";
 import Header from "../../components/Header/Header";
 import "./home.css";
+import AuthService from "../../services/authServive";
 const Home = () => {
+  const [currentUser, setCurrentUser] = React.useState(null);
+  const [arrayclothes, setArrayClothes] = React.useState([]);
+
+  React.useEffect(() => {
+    if (AuthService.getCurrentUser() === null) {
+      setCurrentUser(null);
+    } else {
+      setCurrentUser(AuthService.getCurrentUser());
+    }
+    clothesService.getAllClothes().then((response) => {
+      setArrayClothes(response.data.clothes);
+      console.log("Get All Clothes");
+    });
+  }, []);
   return (
     <div className="w-[80%] mx-auto ">
-      <Header />
+      <Header currentUser={currentUser} />
       <div className="mt-4 outline-2 outline-double outline-offset-2 flex flex-row justify-center items-center">
         <div className="w-[50%] flex flex-col justify-items-center items-center">
           <p className="text-sm text-[#BFBBA9] italic">OUR BESTSELLERS</p>

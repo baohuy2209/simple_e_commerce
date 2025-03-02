@@ -7,10 +7,12 @@ import {
   AlignJustify,
   User,
   LogOut,
+  Key,
 } from "lucide-react";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import "./header.css";
-const Header = () => {
+import AuthService from "../../services/authServive";
+const Header = ({ currentUser }) => {
   return (
     <header className="header">
       <div className="header__logo">
@@ -65,13 +67,26 @@ const Header = () => {
                   </a>
                 </MenuItem>
                 <MenuItem>
-                  <a
-                    className=" w-full mx-auto px-2 py-1 rounded-lg flex flex-row justify-between items-center data-[focus]:bg-[#F2EFE7]"
-                    href="/login"
-                  >
-                    <span className="font-semibold">Login</span>
-                    <LogOut size={20} />
-                  </a>
+                  {currentUser ? (
+                    <a
+                      className=" w-full mx-auto px-2 py-1 rounded-lg flex flex-row justify-between items-center data-[focus]:bg-[#F2EFE7]"
+                      href="/login"
+                      onClick={() => {
+                        AuthService.logout();
+                      }}
+                    >
+                      <span className="font-semibold">Logout</span>
+                      <LogOut size={20} />
+                    </a>
+                  ) : (
+                    <a
+                      className=" w-full mx-auto px-2 py-1 rounded-lg flex flex-row justify-between items-center data-[focus]:bg-[#F2EFE7]"
+                      href="/login"
+                    >
+                      <span className="font-semibold">Login</span>
+                      <Key size={20} />
+                    </a>
+                  )}
                 </MenuItem>
               </MenuItems>
             </Menu>

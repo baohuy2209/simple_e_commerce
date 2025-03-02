@@ -1,26 +1,39 @@
 import { useState, useRef } from "react";
-import AuthService from "../../services/authServive";
 import { useNavigate } from "react-router-dom";
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+import ClothesService from "../../services/clothesService";
+import { CirclePercent, FolderPen } from "lucide-react";
+const CreateClothes = () => {
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState(0);
+  const [image, setImage] = useState("");
+  const [inventory_quantity, setInventory_quantity] = useState(0);
+  const [selled, setSelled] = useState(0);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
   const form = useRef();
-  const onChangeEmail = (e) => {
-    setEmail(e.target.value);
+  const onChangeName = (e) => {
+    setName(e.target.value);
   };
 
-  const onChangePassword = (e) => {
-    setPassword(e.target.value);
+  const onChangePrice = (e) => {
+    setPrice(e.target.value);
+  };
+  const onChangeImage = (e) => {
+    setImage(e.target.value);
+  };
+  const onChangeInventoryQuantity = (e) => {
+    setInventory_quantity(e.target.value);
+  };
+  const onChangeSelledQuanityt = (e) => {
+    setSelled(e.target.value);
   };
   const handleLogin = (e) => {
     e.preventDefault();
     setMessage("");
     setLoading(true);
 
-    AuthService.login(email, password)
+    ClothesService.createClothes(name, price, image, inventory_quantity, selled)
       .then(() => {
         navigate("/");
         window.location.reload();
@@ -57,55 +70,73 @@ const Login = () => {
           </h1>
           <p className="text-sm font-normal text-gray-600 mb-7">Welcome Back</p>
           <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-              />
-            </svg>
+            <FolderPen size={20} />
             <input
               className="pl-2 outline-none border-none"
               type="text"
-              name="email"
-              id="email"
-              value={email}
+              name="name"
+              id="name"
+              value={name}
               onChange={(e) => {
-                onChangeEmail(e);
+                onChangeName(e);
               }}
-              placeholder="Email Address"
+              placeholder="Name"
             />
           </div>
-          <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-gray-400"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
-                clipRule="evenodd"
-              />
-            </svg>
+          <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+            <CirclePercent size={20} />
             <input
               className="pl-2 outline-none border-none"
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password"
-              value={password}
+              type="number"
+              name="price"
+              id="price"
+              value={price}
               onChange={(e) => {
-                onChangePassword(e);
+                onChangePrice(e);
               }}
+              placeholder="Price"
+            />
+          </div>
+          <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+            <CirclePercent size={20} />
+            <input
+              className="pl-2 outline-none border-none"
+              type="text"
+              name="image"
+              id="image"
+              value={image}
+              onChange={(e) => {
+                onChangeImage(e);
+              }}
+              placeholder="Image"
+            />
+          </div>
+          <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+            <CirclePercent size={20} />
+            <input
+              className="pl-2 outline-none border-none"
+              type="number"
+              name="inventory_quantity"
+              id="inventory_quantity"
+              value={inventory_quantity}
+              onChange={(e) => {
+                onChangeInventoryQuantity(e);
+              }}
+              placeholder="Inventory quantity"
+            />
+          </div>
+          <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+            <CirclePercent size={20} />
+            <input
+              className="pl-2 outline-none border-none"
+              type="number"
+              name="selled_quantity"
+              id="selled_quantity"
+              value={selled}
+              onChange={(e) => {
+                onChangeSelledQuanityt(e);
+              }}
+              placeholder="Image"
             />
           </div>
           <button
@@ -117,22 +148,8 @@ const Login = () => {
                 <span className="visually-hidden">Loading...</span>
               </div>
             )}
-            Login
+            Create
           </button>
-          <div className="flex flex-row justify-between items-center">
-            <a
-              href="#"
-              className="text-sm ml-2 hover:text-blue-500 cursor-pointer"
-            >
-              Forgot Password ?
-            </a>
-            <a
-              href="/signup"
-              className="text-sm ml-2 hover:text-blue-500 cursor-pointer"
-            >
-              Sign Up
-            </a>
-          </div>
           {message && (
             <div className="form-group">
               <div className="alert alert-danger" role="alert">
@@ -145,4 +162,4 @@ const Login = () => {
     </div>
   );
 };
-export default Login;
+export default CreateClothes;

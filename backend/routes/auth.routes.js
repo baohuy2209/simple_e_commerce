@@ -8,7 +8,7 @@ router.all("/", function (req, res, next) {
   next();
 });
 router.post("/signup", signup);
-router.post("/login", login);
+router.post("/signin", login);
 router.post("/logout", logout);
 
 module.exports = router;
