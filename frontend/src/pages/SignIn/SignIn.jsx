@@ -12,6 +12,7 @@ const Login = () => {
   const onChangePassword = (e) => {
     setPassword(e.target.value);
   };
+  const handleLogin = (e) => {};
   return (
     <div className="h-screen md:flex">
       <div className="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 i justify-around items-center hidden">
@@ -26,7 +27,7 @@ const Login = () => {
         <div className="absolute -top-20 -right-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
       </div>
       <div className="flex md:w-1/2 justify-center py-10 items-center bg-white">
-        <form className="bg-white">
+        <form onSubmit={handleLogin} className="bg-white">
           <h1 className="text-gray-800 font-bold text-2xl mb-1">
             Hello Again!
           </h1>
