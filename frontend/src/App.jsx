@@ -4,6 +4,7 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/SignIn/SignIn";
 import SignUp from "./pages/SignUp/SignUp";
 import About from "./pages/About/About";
+import "bootstrap/dist/css/bootstrap.css";
 function App() {
   return (
     <>

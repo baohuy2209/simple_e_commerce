@@ -2,10 +2,10 @@ const generateTokenAndSetCookie = require("../utils/generateTokenAndSetCookie.js
 const bcrypt = require("bcryptjs");
 const User = require("../models/user.models.js");
 const signup = async (req, res) => {
-  const { email, password, name } = req.body;
+  const { email, password, fullname } = req.body;
 
   try {
-    if (!email || !password || !name) {
+    if (!email || !password || !fullname) {
       throw new Error("All fields are required");
     }
 
@@ -19,16 +19,12 @@ const signup = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const verificationToken = Math.floor(
-      100000 + Math.random() * 900000
-    ).toString();
 
     const user = new User({
       email,
       password: hashedPassword,
-      name,
-      verificationToken,
-      verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
+      fullname,
+      lastLogin: new Date(),
     });
 
     await user.save();
